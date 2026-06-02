@@ -3,7 +3,9 @@
 int main() {
 
     /* ----------------------------------------------
-     * no es un juego grafico
+     * PROYECTO 2
+     * ----------------------------------------------
+     * no es un juego gráfico
      * simulacion
      * estado del mundo cambia durante ejecuccion.
      * archivos de salida
@@ -13,20 +15,63 @@ int main() {
      * ----------------------------------------------
      * Temas de Progra 2 (no hay que usarlos todos):
      *
-     * OOP
-     * clases - herencia polimorfismo
-     * punteros
-     * programacion generica (templates e interfaces)
-     * iteradores (no se)
-     * sobrecarga de operadores, excepciones
-     * manejo de archivos
-     * patrones de diseño
+     *      1...OOP: Clases y responsabilidades claras.
+     *
+     *      2...Clases -Uso correcto de herencia, polimorfismo, relaciones entre clases.
+     *
+     *      3...Manejo responsable de memoria, con punteros, o memoria inteligente.
+     *
+     *      4...Programacion generica - Estructuras o Iteradores (templates e interfaces)
+     *          iteradores (no se)
+     *
+     *      5...Sobrecarga de operadores, y excepciones
+     *
+     *      6...Manejo de archivos, errores, validaciones. -
+     *          Archivos con formato claro.
+     *          Archivos de entrada - Informacion necesaria para iniciar el juego
+     *          Archivos de salida - Revisar el comportamiento y resultado final. Bitacora
+     *
+     *      7...Aplicacion de patrones de diseño, cuando sea necesario.
+     *
+     *      8...Solucion simple, clara. NO HAY NECESIDAD DE USAR TODOS LOS TEMAS.
+     *
      * -----------------------------------------------
      * QUE HAY QUE HACER
      *
-     * master
+     *  una simulacion que cargue, haga
+     *  Registros en archivos (juego).
+     *  Reporte final de la aventura, y hechos relevantes
      *
-     * 
+     * ej. (enemigos.txt, estadodelpersonaje.txt)
+     *
+     * -----------------------------------------------
+     * ESTRUCTURA DEL JUEGO
+     *
+     * Mundo:
+     *
+     * Personajes:
+     *
+     * Elementos:
+     *
+     * Eventos:
+     *
+     * Progreso:
+     *
+     * Registro:
+     *
+     * Reporte:
+     *
+     * -----------------------------------------------
+     * REQUERIMIENTOS
+     * Modular, mantenible, bajo acoplamiento
+     * en ingles
+     * rutas relativas
+     * la ejecucion debe poder reproducirse con los archivos entregados.
+     * El sistema debe manejar errores
+     * -----------------------------------------------
+     *
+     *
+     *
      *
      */
 
