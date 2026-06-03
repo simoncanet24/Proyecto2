@@ -5,7 +5,7 @@
 
 class Enemigos:public SistemaGeneral {
 private:
-
+    
 
 };
 

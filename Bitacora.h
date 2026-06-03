@@ -1,16 +1,27 @@
-//
-// Created by min_w on 6/3/2026.
-//
-
-#ifndef PROYECTO2_BITACORA_H
-#define PROYECTO2_BITACORA_H
-
-
+#include <iostream>
+#include <fstream>
+#pragma once
+#include <vector>
+using namespace std;
 
 class Bitacora {
+private:
+vector<string> eventos;
+public:
+    void datos(const string& dato)
+    {
+        eventos.push_back(dato);
+    }
+    void save(const string& filename)
+    {
+        ofstream file(filename);
+        for (auto& e: eventos)
+        {
+            file << e << endl;
+        }
+    }
 
 };
 
 
 
-#endif //PROYECTO2_BITACORA_H

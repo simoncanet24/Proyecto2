@@ -28,6 +28,8 @@ int main() {
     {
         cout<<("Caminas por las calles pero no ves a nadie, solo un gato el cual llevas a un lugar seguro donde no le caiga lluvia");
     }
+    cout<<"Te has encontrado con un enemigo amenazandote"<<"\n";
+
 
     cout<<"\n Press ENTER para salir";
     cin.ignore();
@@ -82,17 +84,17 @@ int main() {
      *
      * Mundo:
      *
-     * Personajes:
+     * Personajes: Se realizo la clase jugador y enemigos la cual la clase base es la de SistemaGeneral
      *
-     * Elementos:
+     * Elementos: Inventario
      *
-     * Eventos:
+     * Eventos: Se esta realizando la bitacora,Reporte y archivos
      *
-     * Progreso:
+     * Progreso: Va de la mano con eventos
      *
-     * Registro:
+     * Registro: En proceso
      *
-     * Reporte:
+     * Reporte: En proceso
      *
      * -----------------------------------------------
      * REQUERIMIENTOS

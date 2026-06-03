@@ -10,7 +10,7 @@ class Reporte {
     string file;
     public:
     explicit Reporte(string file);
-    void generarReporte(const Jugador& jugador,const Bitacora& bitacora)
+    void generarReporte(const Jugador& jugador)
     {
         ofstream f(file);
         if (!f.is_open())

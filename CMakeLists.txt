@@ -3,24 +3,20 @@ project(Proyecto2)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Proyecto2 main.cpp
-        Inventario.cpp
-        Inventario.h
-        Jugador.cpp
+add_executable(Proyecto2
+        main.cpp
         Jugador.h
-        Objetos.cpp
-        Objetos.h
-        Enemigos.cpp
-        Enemigos.h
-        Reporte.cpp
-        Reporte.h
-        Bitacora.cpp
+        Jugador.cpp
+        Enemigo.h
+        Enemigo.cpp
+        Inventario.h
+        Inventario.cpp
         Bitacora.h
-        SistemaGeneral.cpp
-        SistemaGeneral.h
-        Archivos.cpp
-        Archivos.h
+        Bitacora.cpp
+        Archivo.h
+        Archivo.cpp
+        Reporte.h
+        Reporte.cpp
+        SistemaCombate.cpp
+        SistemaCombate.h
 )
-target_include_directories(Proyecto2 PRIVATE include)
-
-target_link_libraries(Proyecto2 winmm)
