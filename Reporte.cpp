@@ -1,0 +1,2 @@
+#include "Reporte.h"
+

@@ -1,6 +1,38 @@
 #include <iostream>
+#include <string>
+#include <thread>
+#include<windows.h>
+#include "Archivos.h"
+using namespace std;
+
+auto jugador= Archivos::descargarJugador("jugador.txt");
+auto enemigos = Archivos::descargarEnemigos("enemigos.txt");
+auto objetos = Archivos::descargarObjetos("objetos.txt");
+
 
 int main() {
+
+    cout<<("Te despiertas en la calle en una ciudad mientras llueve");
+    cout<<("No sabes quien eres ni donde estas");
+    cout<<"\n";
+    cout<<("Que deberia de hacer");
+    cout<<(" [1] Gritar por ayuda");
+    cout<<(" [2]Caminar por la calle");
+    int choice;
+    if (choice ==1)
+    {
+        cout<<("Parece que no hay nadie por las calles en este momento, solo se escuchan las gotas de lluvia");
+
+    }
+    else
+    {
+        cout<<("Caminas por las calles pero no ves a nadie, solo un gato el cual llevas a un lugar seguro donde no le caiga lluvia");
+    }
+
+    cout<<"\n Press ENTER para salir";
+    cin.ignore();
+    cin.get();
+    return 0;
 
     /* ----------------------------------------------
      * PROYECTO 2
@@ -12,6 +44,7 @@ int main() {
      * puede ser cualquier tematica
      * cada vez que se corra el programa tiene que tirar
      * algo distinto.
+     * Sistema de suerte si el jugador desea.
      * ----------------------------------------------
      * Temas de Progra 2 (no hay que usarlos todos):
      *
