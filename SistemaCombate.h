@@ -54,5 +54,4 @@ class SistemaCombate {
         bitacora.datos("Jugador fue derrotado por " + enemigos.getNombre());
         return false;
     }
-
 };
