@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include "Jugador.h"
 #include "Enemigos.h"
@@ -5,53 +6,54 @@
 using namespace std;
 
 class SistemaCombate {
-    bool combat(Jugador& jugador, Enemigos enemigos, Bitacora& bitacora) {
-        cout << "\n Combate: " << enemigos.getNombre() << "\n";
-        cout << enemigos << "\n";
-        bitacora.datos("Combate iniciado contra " + enemigos.getNombre());
+public:
+    static bool combat(Jugador& jugador, Enemigos& enemigo, Bitacora& bitacora) {
+        cout << "\n=== Combate contra: " << enemigo.getNombre() << " ===\n";
+        cout << enemigo << "\n";
+        bitacora.datos("Combate iniciado contra " + enemigo.getNombre());
 
-        while (jugador.siguePartida() && enemigos.siguePartida()) {
-            cout << jugador << "\n";
+        while (jugador.siguePartida() && enemigo.siguePartida()) {
+            cout << "\n" << jugador << "\n";
             cout << "[1] Atacar  [2] Usar curativo  [3] Correr\n> ";
             int opcion;
             cin >> opcion;
 
             if (opcion == 1) {
-                enemigos.tomaDamage(jugador.getAtaque());
+                enemigo.tomaDamage(jugador.getAtaque());
                 cout << "Le hiciste " << jugador.getAtaque()
-                          << " de damage a " << enemigos.getNombre()
-                          << ". HP: " << enemigos.getHp() << "\n";
-                bitacora.datos("Jugador ataca a " + enemigos.getNombre()
-                         + " por " + to_string(jugador.getAtaque()));
+                     << " de dano a " << enemigo.getNombre()
+                     << ". HP enemigo: " << enemigo.getHp() << "\n";
+                bitacora.datos("Jugador ataca a " + enemigo.getNombre()
+                               + " por " + to_string(jugador.getAtaque()));
 
-                if (enemigos.siguePartida()) {
-                    jugador.tomaDamage(enemigos.getAtaque());
-                    cout << enemigos.getNombre()
-                              << enemigos.getAtaque() << ". Tu quito:  "
-                              << enemigos.getHp() << "\n";
-                    bitacora.datos(enemigos.getNombre() + " golpea al jugador por "
-                             + to_string(enemigos.getAtaque()));
+                if (enemigo.siguePartida()) {
+                    jugador.tomaDamage(enemigo.getAtaque());
+                    cout << enemigo.getNombre() << " te ataco por "
+                         << enemigo.getAtaque() << ". Tu HP: "
+                         << jugador.getHp() << "\n";
+                    bitacora.datos(enemigo.getNombre() + " golpea al jugador por "
+                                   + to_string(enemigo.getAtaque()));
                 }
 
             } else if (opcion == 2) {
                 jugador.usarSanador();
 
             } else {
-                cout << "Escapaste \n";
-                bitacora.datos("Jugador escapo de " + enemigos.getNombre());
+                cout << "Escapaste del combate.\n";
+                bitacora.datos("Jugador escapo de " + enemigo.getNombre());
                 return false;
             }
         }
 
         if (jugador.siguePartida()) {
-            cout << "\nVenciste a " << enemigos.getNombre() << "!\n";
-            jugador.ganaExperiencia(enemigos. ());
-            bitacora.datos("Jugador derroto a " + enemigos.getNombre()
-                     + ". +" + to_string(enemigos.getExp()) + " experiencia ");
+            cout << "\nVenciste a " << enemigo.getNombre() << "!\n";
+            jugador.ganaExperiencia(enemigo.getExp());
+            bitacora.datos("Jugador derroto a " + enemigo.getNombre()
+                           + ". +" + to_string(enemigo.getExp()) + " experiencia");
             return true;
         }
 
-        bitacora.datos("Jugador fue derrotado por " + enemigos.getNombre());
+        bitacora.datos("Jugador fue derrotado por " + enemigo.getNombre());
         return false;
     }
 };

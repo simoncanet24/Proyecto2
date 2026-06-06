@@ -1,47 +1,37 @@
-#include <iostream>
-using namespace std;
 #pragma once
+#include <iostream>
+#include <string>
+using namespace std;
 
 class SistemaGeneral {
 protected:
     string nombre;
     int hp;
     int ataque;
+
 public:
-    SistemaGeneral() {
-        nombre = "Jugador";
-        hp = 100;
-        ataque = 10;
-    }
-    SistemaGeneral(string nombre, int hp, int ataque)
-    {
-        nombre = nombre;
-        hp = hp;
-        ataque = ataque;
-    }
-    virtual ~SistemaGeneral()=default;
-    const string getNombre()
-    {
-        return nombre;
-    }
-    int getHp()
-    {
-        return hp;
-    }
-    int getAtaque()
-    {
-        return ataque;
-    }
-    void setHp(int hp)
-    {
-        this->hp = hp;
-    }
-    bool siguePartida()
-    {
-        return hp>0;
-    }
+    // Constructor por defecto
+    SistemaGeneral() : nombre("Desconocido"), hp(100), ataque(10) {}
 
+    // Constructor parametrizado — se usa lista de inicializacion para evitar shadowing
+    SistemaGeneral(const string& nombre, int hp, int ataque)
+        : nombre(nombre), hp(hp), ataque(ataque) {}
+
+    virtual ~SistemaGeneral() = default;
+
+    string getNombre() const { return nombre; }
+    int getHp()        const { return hp; }
+    int getAtaque()    const { return ataque; }
+
+    void setHp(int nuevoHp) { this->hp = nuevoHp; }
+
+    // Recibir dano
+    void tomaDamage(int damage) { hp -= damage; }
+
+    bool siguePartida() const { return hp > 0; }
+
+    friend ostream& operator<<(ostream& os, const SistemaGeneral& e) {
+        os << "[" << e.nombre << "] HP: " << e.hp << " | ATK: " << e.ataque;
+        return os;
+    }
 };
-
-
-

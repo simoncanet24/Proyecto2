@@ -1,82 +1,64 @@
+#pragma once
+#include "SistemaGeneral.h"
 #include "Inventario.h"
 #include "Objetos.h"
-#include "SistemaGeneral.h"
-#pragma once
 
-
-class Jugador :SistemaGeneral{
+class Jugador : public SistemaGeneral {
 private:
-    string nombre;
-    int hp;
     int nivel;
     int experiencia;
-    int ataque;
-    int resetHP;
-    Inventario<Objetos*> *inventario;
+    int hpBase;
+    Inventario<Objetos*>* inventario;
+
 public:
-    Jugador(string nombre, int hp, Inventario<Objetos*> *invent)
-    {
-        this->nombre = nombre;
-        this->hp = hp;
-        this->inventario = invent;
-    }
+    Jugador(const string& nombre, int hp, int ataque, Inventario<Objetos*>* invent)
+        : SistemaGeneral(nombre, hp, ataque),
+          nivel(1), experiencia(0), hpBase(hp),
+          inventario(invent) {}
+
     void agregarObjeto(Objetos* obj) {
         inventario->agregar(obj);
     }
-    void tomarDamage(int damage) {
-        hp -= damage;
-    }
-    void sanarDamage(int damage)
-    {
-        hp += damage;
-    }
-    void obtenerExperienciaYNivel(int cantidadExp)
-    {
-        experiencia +=cantidadExp;
-        if (experiencia>=50)
-        {
-            experiencia-=50;
-            nivel++;
-            ataque +=5;
-            resetHP +=5;
-            hp=resetHP;
-            cout<<"Nuevo nivel de"<<nombre<<"has subido al"<<endl;
-            cout<<"Tu vide se reseteo"<<endl;
 
-
+    // Usa el primer curativo disponible en el inventario
+    void usarSanador() {
+        if (inventario->isEmpty()) {
+            cout << "No tienes curativos en el inventario." << endl;
+            return;
         }
-
+        Objetos* obj = inventario->getObjeto(0);
+        hp += obj->getValorSanacion();
+        cout << "Usaste " << obj->getNombre() << " y recuperaste "
+             << obj->getValorSanacion() << " HP. HP actual: " << hp << endl;
+        inventario->eliminar(0);
     }
 
-    string getNombre()
-    {
-        return nombre;
-    }
-    int getHp()
-    {
-        return hp;
-    }
-    int getNivel()
-    {
-        return nivel;
-    }
-    int getExperiencia()
-    {
-        return experiencia;
-    }
-    int getAtaque()
-    {
-        return ataque;
+    // Gana experiencia y sube de nivel si llega a 50
+    void ganaExperiencia(int cantidad) {
+        experiencia += cantidad;
+        if (experiencia >= 50) {
+            experiencia -= 50;
+            nivel++;
+            ataque += 5;
+            hpBase += 5;
+            hp = hpBase;
+            cout << nombre << " subio al nivel " << nivel << "!" << endl;
+            cout << "Tu vida se reseteo a " << hp << " HP." << endl;
+        }
     }
 
-    bool siguePartida()
-    {
-        return hp>0;
+    int getNivel()      const { return nivel; }
+    int getExperiencia() const { return experiencia; }
+
+    // Muestra el inventario
+    void mostrarInventario() const {
+        if (inventario->isEmpty()) {
+            cout << "Inventario vacio." << endl;
+            return;
+        }
+        cout << "--- Inventario de " << nombre << " ---" << endl;
+        for (int i = 0; i < inventario->tam(); i++) {
+            cout << "  [" << i << "] " << *inventario->getObjeto(i) << endl;
+        }
     }
-
-
-
 };
-
-
-
