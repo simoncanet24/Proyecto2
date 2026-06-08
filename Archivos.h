@@ -4,10 +4,10 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "Jugador.h"
-#include "Enemigos.h"
-#include "Objetos.h"
-#include "Inventario.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "Item.h"
+#include "Inventory.h"
 using namespace std;
 
 // Formato jugador.txt:

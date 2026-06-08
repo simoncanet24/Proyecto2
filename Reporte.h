@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Jugador.h"
+#include "Player.h"
 #include "Bitacora.h"
 using namespace std;
 

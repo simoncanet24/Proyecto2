@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
-#include "Jugador.h"
-#include "Enemigos.h"
+#include "Player.h"
+#include "Enemy.h"
 #include "Bitacora.h"
 using namespace std;
 

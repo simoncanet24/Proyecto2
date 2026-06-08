@@ -5,16 +5,16 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(Proyecto2
         main.cpp
-        SistemaGeneral.h
-        SistemaGeneral.cpp
-        Jugador.h
-        Jugador.cpp
-        Enemigos.h
-        Enemigos.cpp
-        Objetos.h
-        Objetos.cpp
-        Inventario.h
-        Inventario.cpp
+        BaseEntity.h
+        BaseEntity.cpp
+        Player.h
+        Player.cpp
+        Enemy.h
+        Enemy.cpp
+        Item.h
+        Item.cpp
+        Inventory.h
+        Inventory.cpp
         Bitacora.h
         Bitacora.cpp
         Archivos.h
