@@ -1,11 +1,27 @@
 #include <iostream>
 #include <string>
 #include <random>
+#include <limits>
 #include "Player.h"
 #include "EncounterFactory.h"
-#include "DataManager.h"
+#include "DataManager.h" // Assuming this exists in your project directory
 
 using namespace std;
+
+// Helper function to safely get integer input and prevent infinite loops
+int getIntInput(const string& prompt) {
+    int choice;
+    while (true) {
+        cout << prompt;
+        if (cin >> choice) {
+            return choice;
+        } else {
+            cout << "\n[Error] Invalid input. Please enter a number.\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+}
 
 int main() {
     // 1. Initial Setup & Random DMG roll
@@ -28,10 +44,9 @@ int main() {
     cout << "Before you start walking, two strange figures approach you.\n";
     cout << "Who do you want to tag along with?\n";
     cout << "[1] Enzo (Provides 25% damage reduction and finds items)\n";
-    cout << "[2] Gloop (Just kind of stares at you. No buffs.)\n> ";
+    cout << "[2] Gloop (Just kind of stares at you. No buffs.)\n";
 
-    int buddyChoice;
-    cin >> buddyChoice;
+    int buddyChoice = getIntInput("> ");
 
     if (buddyChoice == 1) {
         player.setBuddy(BuddyType::ENZO);
@@ -51,7 +66,7 @@ int main() {
         cout << "Type 'left' or 'right' to choose a route.\n> ";
 
         string route;
-        cin >> route; // Accepts input, ignores case sensitivity context for simplicity
+        cin >> route;
 
         turnCount++;
 
@@ -62,7 +77,7 @@ int main() {
         // Handle Encounter Results
         if (result == 0) {
             DataManager::saveGame(player, turnCount);
-            turnCount--; // Don't count a save action as progressing deeper into the park
+            turnCount--; // Don't count a save action as progressing deeper
         }
         else if (result == 9) {
             gameRunning = false; // Player chose to GIVE UP or Game Over triggered
@@ -79,8 +94,8 @@ int main() {
     DataManager::saveFinalLog(player, turnCount);
 
     cout << "\nPress ENTER to exit...";
-    cin.ignore(); // Clear buffer
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear buffer thoroughly
     cin.get();    // Wait for keypress
 
-    return 0; // Smart pointers automatically clean up memory here!
+    return 0;
 }

@@ -111,6 +111,8 @@ public:
         hp = min(hp + amount, baseHp);
         return hp - before;
     }
+    // Directly sets HP (used primarily for loading game states)
+    void setHp(int HP) { hp = min(HP, baseHp); }
 
     // Increases damage by ~5% (minimum +1) after defeating an enemy.
     // Uses integer arithmetic to keep type safety clean.

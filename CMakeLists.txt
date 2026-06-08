@@ -10,10 +10,7 @@ add_executable(Proyecto2
         Enemy.h
         Item.h
         Inventory.h
-        Bitacora.h
         DataManager.h
-        Reporte.h
-        SistemaCombate.h
         Encounter.cpp
         Encounter.h
         EncounterFactory.cpp
