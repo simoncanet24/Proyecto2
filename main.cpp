@@ -9,7 +9,7 @@ using namespace std;
 
 int main() {
     // --- Carga de datos desde archivos ---
-    Jugador*          jugador  = Archivos::descargarJugador("jugador.txt");
+    Player*          jugador  = Archivos::descargarJugador("jugador.txt");
     vector<Enemigos*> enemigos = Archivos::descargarEnemigos("enemigos.txt");
     vector<Objetos*>  objetos  = Archivos::descargarObjetos("objetos.txt");
 
