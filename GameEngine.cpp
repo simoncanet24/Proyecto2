@@ -11,6 +11,9 @@
 
 using namespace std;
 
+//________________HELPERS________________
+
+
 // Helper to generate the initial 10-30 damage before constructing the Player
 int generateInitialDamage() {
     random_device rd;
@@ -64,6 +67,7 @@ void GameEngine::selectBuddy() {
 
 void GameEngine::gameLoop() {
     while (gameRunning && player.isAlive()) {
+        clearScreen();
         string route;
 
         // Loop ensures input validation for the route

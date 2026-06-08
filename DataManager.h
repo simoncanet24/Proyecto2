@@ -18,3 +18,11 @@ public:
     // Generates the final_log.txt file upon game over or victory
     static void saveFinalLog(const Player& player, int turnCount);
 };
+
+inline void clearScreen() {
+#ifdef _WIN32
+        system("cls");
+#else
+        system("clear");
+#endif
+}
