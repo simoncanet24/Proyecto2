@@ -96,11 +96,23 @@ void DataManager::saveFinalLog(const Player& player, int turnCount) {
         logFile << "Total Enemies Slain: " << player.getStats().enemiesSlain << "\n";
         logFile << "Total Damage Dealt: " << player.getStats().totalDamageDealt << "\n";
         logFile << "Total Healing Received: " << player.getStats().totalHealingReceived << "\n";
+
+        // ADD THIS BLOCK HERE TO PRINT JOURNEY HISTORY
+        logFile << "\n--- JOURNEY HISTORY ---\n";
+        if (player.getStats().encounterLog.empty()) {
+            logFile << "No steps taken.\n";
+        } else {
+            for (const auto& logEntry : player.getStats().encounterLog) {
+                logFile << logEntry << "\n";
+            }
+        }
+
         logFile << "========================================\n";
 
         logFile.close();
         cout << "\n[System] Final report successfully written to final_log.txt\n";
-    } catch (const ofstream::failure& e) {
-        cerr << "\n[Critical Error] Could not write final_log.txt: " << e.what() << "\n";
+
+    } catch (const ifstream::failure& e) {
+        cerr << "[Error] Failed to write final_log.txt: " << e.what() << "\n";
     }
 }

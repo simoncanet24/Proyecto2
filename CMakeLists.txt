@@ -16,4 +16,6 @@ add_executable(Proyecto2
         EncounterFactory.cpp
         EncounterFactory.h
         DataManager.cpp
+        GameEngine.cpp
+        GameEngine.h
 )
