@@ -11,7 +11,12 @@ add_executable(Proyecto2
         Item.h
         Inventory.h
         Bitacora.h
-        Archivos.h
+        DataManager.h
         Reporte.h
         SistemaCombate.h
+        Encounter.cpp
+        Encounter.h
+        EncounterFactory.cpp
+        EncounterFactory.h
+        DataManager.cpp
 )

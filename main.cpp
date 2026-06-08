@@ -1,77 +1,86 @@
 #include <iostream>
 #include <string>
-#include <vector>
-#include "Archivos.h"
-#include "SistemaCombate.h"
-#include "Reporte.h"
-#include "Bitacora.h"
+#include <random>
+#include "Player.h"
+#include "EncounterFactory.h"
+#include "DataManager.h"
+
 using namespace std;
 
 int main() {
-    // --- Carga de datos desde archivos ---
-    Player*          jugador  = Archivos::descargarJugador("jugador.txt");
-    vector<Enemigos*> enemigos = Archivos::descargarEnemigos("enemigos.txt");
-    vector<Objetos*>  objetos  = Archivos::descargarObjetos("objetos.txt");
+    // 1. Initial Setup & Random DMG roll
+    random_device rd;
+    mt19937 rng(rd());
+    uniform_int_distribution<int> dmgDist(10, 30);
 
-    Bitacora bitacora;
-    bitacora.datos("Partida iniciada.");
+    int initialDamage = dmgDist(rng);
+    Player player("Survivor", 100, initialDamage);
 
-    // Agrega los objetos cargados al inventario del jugador
-    for (auto* obj : objetos)
-        jugador->agregarObjeto(obj);
+    // 2. Boot Narration
+    cout << "======================================================\n";
+    cout << "               ABANDONED THEME PARK                   \n";
+    cout << "======================================================\n";
+    cout << "You wake up on the cracked asphalt of an old theme park.\n";
+    cout << "The rides are rusted. The mascots look... wrong.\n";
+    cout << "Your Base HP: 100 | Your Base Damage: " << initialDamage << "\n\n";
 
-    // --- Intro ---
-    cout << "\nTe despiertas en la calle de una ciudad mientras llueve.\n";
-    cout << "No sabes quien eres ni donde estas.\n\n";
-    cout << "Que deberia de hacer?\n";
-    cout << " [1] Gritar por ayuda\n";
-    cout << " [2] Caminar por la calle\n> ";
+    // 3. Buddy Selection
+    cout << "Before you start walking, two strange figures approach you.\n";
+    cout << "Who do you want to tag along with?\n";
+    cout << "[1] Enzo (Provides 25% damage reduction and finds items)\n";
+    cout << "[2] Gloop (Just kind of stares at you. No buffs.)\n> ";
 
-    int choice;
-    cin >> choice;
+    int buddyChoice;
+    cin >> buddyChoice;
 
-    if (choice == 1) {
-        cout << "\nParece que no hay nadie por las calles. Solo se escuchan las gotas de lluvia.\n";
-        bitacora.datos("Jugador grito por ayuda.");
+    if (buddyChoice == 1) {
+        player.setBuddy(BuddyType::ENZO);
+        cout << "\nEnzo nods. You feel safer already.\n";
     } else {
-        cout << "\nCaminas por las calles pero no ves a nadie, solo un gato al que llevas a un lugar seguro.\n";
-        bitacora.datos("Jugador camino por la calle.");
+        player.setBuddy(BuddyType::GLOOP);
+        cout << "\nGloop smiles weirdly. Let's hope he's useful.\n";
     }
 
-    // --- Combates ---
-    bool vivoAlFinal = true;
-    for (auto* enemigo : enemigos) {
-        bool resultado = SistemaCombate::combat(*jugador, *enemigo, bitacora);
-        if (!resultado && !jugador->siguePartida()) {
-            vivoAlFinal = false;
-            break;
+    // 4. Main Game Loop
+    int turnCount = 0;
+    bool gameRunning = true;
+
+    while (gameRunning && player.isAlive()) {
+        cout << "\n------------------------------------------------------\n";
+        cout << "You stand at a fork in the park paths.\n";
+        cout << "Type 'left' or 'right' to choose a route.\n> ";
+
+        string route;
+        cin >> route; // Accepts input, ignores case sensitivity context for simplicity
+
+        turnCount++;
+
+        // Generate and execute the encounter
+        auto encounter = EncounterFactory::createNext(turnCount, player);
+        int result = encounter->execute(player);
+
+        // Handle Encounter Results
+        if (result == 0) {
+            DataManager::saveGame(player, turnCount);
+            turnCount--; // Don't count a save action as progressing deeper into the park
+        }
+        else if (result == 9) {
+            gameRunning = false; // Player chose to GIVE UP or Game Over triggered
         }
     }
 
-    // --- Final ---
-    if (vivoAlFinal) {
-        cout << "\nSobreviviste la aventura. Nivel final: " << jugador->getNivel() << "\n";
-        bitacora.datos("Jugador completo la aventura.");
+    // 5. Game Over / Final Log Execution
+    if (!player.isAlive()) {
+        cout << "\n*** YOU DIED ***\n";
     } else {
-        cout << "\nFuiste derrotado. Fin del juego.\n";
-        bitacora.datos("Partida terminada en derrota.");
+        cout << "\n*** YOU GAVE UP (OR WON) ***\n";
     }
 
-    // --- Archivos de salida ---
-    bitacora.save("bitacora.txt");
+    DataManager::saveFinalLog(player, turnCount);
 
-    Reporte reporte("reporte.txt");
-    reporte.generarReporte(*jugador, bitacora);
+    cout << "\nPress ENTER to exit...";
+    cin.ignore(); // Clear buffer
+    cin.get();    // Wait for keypress
 
-    cout << "\nReporte y bitacora guardados.\n";
-    cout << "\nPresiona ENTER para salir...";
-    cin.ignore();
-    cin.get();
-
-    // Liberar memoria
-    delete jugador;
-    for (auto* e : enemigos) delete e;
-    for (auto* o : objetos)  delete o;
-
-    return 0;
+    return 0; // Smart pointers automatically clean up memory here!
 }
