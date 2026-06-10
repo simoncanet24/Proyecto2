@@ -67,7 +67,7 @@ void GameEngine::selectBuddy() {
 
 void GameEngine::gameLoop() {
     while (gameRunning && player.isAlive()) {
-        clearScreen();
+        //clearScreen();
         string route;
 
         // Loop ensures input validation for the route
