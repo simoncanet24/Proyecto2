@@ -8,25 +8,13 @@
 #include "Inventory.h"
 using namespace std;
 
-// ─────────────────────────────────────────────────────────────────────────────
-// BuddyType enum  (defined at file scope so DataManager can reference it
-//                  without pulling in the full Player class)
-// ─────────────────────────────────────────────────────────────────────────────
+
+
+
 enum class BuddyType { NONE, ENZO, GLOOP };
+//enum so that DataManager can use it without using the entire Player class :) )
 
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Buddy  — aggregate companion (Delegate Pattern)
-//
-// Owned by value inside Player — no heap allocation, no pointer needed.
-// Encapsulates ALL buddy-specific logic so Player methods stay clean:
-//
-//   filterDamage()  — Enzo reduces incoming damage by 25%.
-//   hasDropBonus()  — Enzo grants an item-drop chance after enemy fights.
-//
-// Gloop has no buffs or drops; it exists for narrative and becomes the
-// ENDGAME boss regardless of whether it is the player's current buddy.
-// ─────────────────────────────────────────────────────────────────────────────
 class Buddy {
     BuddyType type;
     string    name;
