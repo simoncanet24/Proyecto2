@@ -5,25 +5,7 @@
 #include <iostream>
 using namespace std;
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Inventory<T>
-//
-// A fixed-capacity sequential container, primarily intended to hold
-// std::unique_ptr<Item>.  Generalised as a template so any T can be stored
-// (Generic Programming topic), but the entire API is designed around the
-// move-only ownership semantics of unique_ptr.
-//
-//  add(T)        — transfers ownership IN  (caller must std::move a unique_ptr)
-//  remove(int)   — transfers ownership OUT (returns T by value via move)
-//  peek(int)     — const ref for inspection; no ownership changes hands
-//
-// Why the three-method split?
-//   Separating "look" (peek) from "take" (remove) prevents accidental ownership
-//   transfers during display loops, and makes call sites self-documenting.
-//
-// Iterator support lets range-based for loops work:
-//   for (const auto& item : inventory) { cout << *item; }
-// ─────────────────────────────────────────────────────────────────────────────
+
 template <typename T>
 class Inventory {
     vector<T> items;
@@ -32,11 +14,6 @@ class Inventory {
 public:
     explicit Inventory(int cap) : capacity(cap) {}
 
-    // ── Core operations ───────────────────────────────────────────────────────
-
-    // Transfers ownership of 'item' into the inventory.
-    // For  T = unique_ptr<Item>: caller writes  inventory.add(std::move(ptr));
-    // Returns false and prints a warning if the inventory is already full.
     bool add(T item) {
         if (static_cast<int>(items.size()) >= capacity) {
             cout << "[Inventory] Full — item was not added.\n";

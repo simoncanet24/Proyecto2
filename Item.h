@@ -3,21 +3,7 @@
 #include <string>
 using namespace std;
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Item
-//
-// A consumable healing item the player can find during encounters.
-// There are three archetypes (MEDKIT, BANDAGES, HEALING_HERB).
-//
-// Design notes:
-//   • The actual HP restored is NOT stored here as an absolute value.
-//     Instead, healPercent (25–50) is stored and the real amount is computed
-//     by Player::applyItem() as  (healPercent * Player::baseHp) / 100.
-//     This keeps Items independent of any particular player's stats and lets
-//     the same item scale correctly after a save/reload (Data Persistence).
-//   • Instances are managed exclusively via std::unique_ptr<Item> — Item has
-//     no knowledge of this; ownership is the Inventory template's concern.
-// ─────────────────────────────────────────────────────────────────────────────
+
 class Item {
 public:
     enum class Type { MEDKIT, BANDAGES, HEALING_HERB };

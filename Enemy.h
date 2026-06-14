@@ -5,21 +5,6 @@
 using namespace std;
 
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Enemy
-//
-// A hostile entity encountered in the abandoned theme park.
-// HP and damage are provided externally (EncounterFactory randomises them
-// in [35, 90] and [8, 20] respectively) — Enemy itself is just the data.
-//
-// Eight named archetypes are enumerated so EncounterFactory can select one
-// at random and construct the right name automatically.
-//
-// Flee threshold:
-//   isFleeThreshold() returns true when HP ≤ 10% of starting HP.
-//   The actual 10% flee roll is performed inside EnemyEncounter, keeping
-//   random-number logic centralised there rather than scattered in Entity classes.
-// ─────────────────────────────────────────────────────────────────────────────
 class Enemy : public BaseEntity {
 public:
     // Eight archetypes for the abandoned-park setting.
