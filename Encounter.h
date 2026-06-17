@@ -12,9 +12,6 @@ using namespace std;
 class Encounter {
 public:
     virtual ~Encounter() = default;
-
-    // Returns status code to the main loop:
-    // 1 = Continue, 0 = Save Game, 9 = Game Over / Give Up
     virtual int execute(Player& player) = 0;
 };
 

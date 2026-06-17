@@ -11,10 +11,6 @@
 
 using namespace std;
 
-//________________HELPERS________________
-
-
-// Helper to generate the initial 10-30 damage before constructing the Player
 int generateInitialDamage() {
     random_device rd;
     mt19937 rng(rd());
@@ -67,33 +63,26 @@ void GameEngine::selectBuddy() {
 
 void GameEngine::gameLoop() {
     while (gameRunning && player.isAlive()) {
-        //clearScreen();
+
         string route;
 
-        // Loop ensures input validation for the route
         while (true) {
             cout << "\n------------------------------------------------------\n";
             cout << "You stand at a fork in the park paths.\n";
             cout << "Type 'left' or 'right' to choose a route.\n> ";
             cin >> route;
 
-            // Make case-insensitive conversion to lowercase
             for (char &c : route) c = tolower(c);
-
             if (route == "left" || route == "right") {
-                break; // Valid input received
+                break;
             }
             cout << "\n[Error] Invalid direction! The dark mist prevents you from going that way.\n";
         }
 
         turnCount++;
 
-        // Generate the encounter
         auto encounter = EncounterFactory::createNext(turnCount, player);
 
-        // --- SYLLABUS TOPIC USE: DOWNCASTING ---
-        // We evaluate the abstract Encounter pointer back to its concrete type
-        // using dynamic_cast to build the narrative history log.
         string encounterDesc = "encountered an anomaly";
         if (dynamic_cast<EnemyEncounter*>(encounter.get())) {
             encounterDesc = "fought an enemy";
@@ -111,12 +100,10 @@ void GameEngine::gameLoop() {
 
         if (result == 0) {
             DataManager::saveGame(player, turnCount);
-            turnCount--; // Don't progress depth on game save
+            turnCount--;
         }
         else {
-            // Record this journey path only if a genuine step forward occurred
             player.recordEncounter("went " + route + " -> " + encounterDesc);
-
             if (result == 9) {
                 gameRunning = false;
             }

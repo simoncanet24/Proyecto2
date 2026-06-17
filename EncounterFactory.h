@@ -7,7 +7,6 @@
 #include <random>
 #include "Encounter.h"
 #include "Player.h"
-
 using namespace std;
 
 class EncounterFactory {

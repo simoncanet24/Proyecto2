@@ -15,7 +15,6 @@ private:
     int turnCount;
     bool gameRunning;
 
-    // Internal helper methods
     int getIntInput(const string& prompt);
     void printBootNarration();
     void selectBuddy();
@@ -23,10 +22,8 @@ private:
     void gameOver();
 
 public:
-    // Constructor initializes the player and game state
-    GameEngine();
 
-    // The single public method called by main.cpp
+    GameEngine();
     void run();
 };
 

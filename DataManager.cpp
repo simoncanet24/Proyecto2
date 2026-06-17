@@ -5,10 +5,8 @@
 
 
 void DataManager::saveGame(const Player& player, int turnCount) {
-    // --- SAVE PLAYER DATA ---
     try {
         ofstream playerFile;
-        // Enable exceptions for file streams
         playerFile.exceptions(ofstream::failbit | ofstream::badbit);
         playerFile.open("PLAYER.txt");
 
@@ -23,8 +21,6 @@ void DataManager::saveGame(const Player& player, int turnCount) {
     } catch (const ofstream::failure& e) {
         cerr << "[Error] Failed to save PLAYER.txt: " << e.what() << "\n";
     }
-
-    // --- SAVE ENEMIES DATA ---
     try {
         ofstream enemyFile;
         enemyFile.exceptions(ofstream::failbit | ofstream::badbit);
@@ -44,31 +40,23 @@ void DataManager::saveGame(const Player& player, int turnCount) {
 bool DataManager::loadGame(Player& player, int& turnCount) {
     try {
         ifstream playerFile;
-        // Enable exceptions to immediately catch missing or corrupted files
         playerFile.exceptions(ifstream::failbit | ifstream::badbit);
         playerFile.open("PLAYER.txt");
 
         string dummy, buddyName;
         int loadedHp, loadedDmg;
-
-        // Skip the header string: "--- PLAYER SAVE DATA ---"
         getline(playerFile, dummy);
-
-        // Read specific formatted values
-        playerFile >> dummy >> loadedHp;        // Reads: "HP:" [value]
-        playerFile >> dummy >> loadedDmg;       // Reads: "DMG:" [value]
-        playerFile >> dummy >> buddyName;       // Reads: "Buddy:" [value]
-        playerFile >> dummy >> dummy >> turnCount; // Reads: "Turn" "Count:" [value]
+        playerFile >> dummy >> loadedHp;
+        playerFile >> dummy >> loadedDmg;
+        playerFile >> dummy >> buddyName;
+        playerFile >> dummy >> dummy >> turnCount;
 
         playerFile.close();
 
-        // 1. Determine Buddy Type
         BuddyType loadedBuddy = BuddyType::NONE;
         if (buddyName == "Enzo") loadedBuddy = BuddyType::ENZO;
         else if (buddyName == "Gloop") loadedBuddy = BuddyType::GLOOP;
 
-        // 2. Reconstruct the Player Object
-        // We initialize with a max base HP of 100, then safely set their current wounded HP
         player = Player("Survivor", 100, loadedDmg, loadedBuddy);
         player.setHp(loadedHp);
 
@@ -76,7 +64,6 @@ bool DataManager::loadGame(Player& player, int& turnCount) {
         return true;
 
     } catch (const ifstream::failure& e) {
-        // This safely triggers if PLAYER.txt doesn't exist yet
         cerr << "\n[System] No valid save file found. Starting a fresh game..." << endl;
         return false;
     }
@@ -98,7 +85,6 @@ void DataManager::saveFinalLog(const Player& player, int turnCount) {
         logFile << "Total Damage Dealt: " << player.getStats().totalDamageDealt << "\n";
         logFile << "Total Healing Received: " << player.getStats().totalHealingReceived << "\n";
 
-        // ADD THIS BLOCK HERE TO PRINT JOURNEY HISTORY
         logFile << "\n--- JOURNEY HISTORY ---\n";
         if (player.getStats().encounterLog.empty()) {
             logFile << "No steps taken.\n";

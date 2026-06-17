@@ -5,7 +5,6 @@
 
 using namespace std;
 
-// Helper function to handle input safely and prevent infinite loops if the user types a letter
 int getValidatedChoice(const string& prompt, int min, int max, int saveChoice = 0, int quitChoice = 9) {
     int choice;
     while (true) {
@@ -51,7 +50,6 @@ void handleItemMenu(Player& player) {
     }
 }
 
-// --- ENEMY ENCOUNTER ---
 int EnemyEncounter::execute(Player& player) {
     // 1. Setup Random Generation for the Enemy
     random_device rd;
@@ -124,7 +122,6 @@ int EnemyEncounter::execute(Player& player) {
     return 1;
 }
 
-// --- ITEM ENCOUNTER ---
 int ItemEncounter::execute(Player& player) {
     cout << "\n--- ITEM DISCOVERY ---" << endl;
     cout << "You rummage through an abandoned concession stand..." << endl;
@@ -133,13 +130,11 @@ int ItemEncounter::execute(Player& player) {
     mt19937 rng(rd());
     uniform_int_distribution<int> healDist(25, 50);
 
-    // FIXED: Actually generating and adding the item to the inventory
     player.addItem(make_unique<Item>("First Aid Kit", "Heals HP", healDist(rng), Item::Type::MEDKIT));
     cout << "You found a First Aid Kit and stored it in your inventory!" << endl;
     return 1;
 }
 
-// --- SAFEHOUSE ENCOUNTER ---
 int SafehouseEncounter::execute(Player& player) {
     cout << "\n--- SAFEHOUSE ---" << endl;
     cout << "You found a secure security booth. Do you want to rest?" << endl;
@@ -163,7 +158,6 @@ int SafehouseEncounter::execute(Player& player) {
     return 1;
 }
 
-// --- SPECIAL ENCOUNTER ---
 int SpecialEncounter::execute(Player& player) {
     cout << "\n--- STRANGE LEVER ---" << endl;
     cout << "You and " << player.getBuddy().getName() << " find a rusty lever on the wall. Pull it?" << endl;
@@ -181,7 +175,6 @@ int SpecialEncounter::execute(Player& player) {
     }
 }
 
-// --- ENDGAME ENCOUNTER ---
 int EndgameEncounter::execute(Player& player) {
     cout << "\n--- FINAL BOSS ---" << endl;
     cout << "Gloop steps out from the shadows. 'It ends here,' he says." << endl;
@@ -193,7 +186,6 @@ int EndgameEncounter::execute(Player& player) {
 
     int gloopHP = 120;
 
-    // FIXED: Shows boss HP and processes damage properly
     while (player.isAlive() && gloopHP > 0) {
         cout << "\n[Gloop HP: " << gloopHP << "]  |  [Your HP: " << player.getHp() << "]" << endl;
         int choice = displayMenuAndGetChoice();

@@ -11,20 +11,18 @@ public:
 private:
     string name;
     string description;
-    int    healPercent;  // randomised in [25, 50] at construction time
+    int    healPercent;
     Type   type;
 
 public:
     Item(const string& name, const string& desc, int healPercent, Type type)
         : name(name), description(desc), healPercent(healPercent), type(type) {}
 
-    // ── Accessors ─────────────────────────────────────────────────────────────
     string getName()        const { return name;        }
     string getDescription() const { return description; }
     int    getHealPercent() const { return healPercent; }
     Type   getType()        const { return type;        }
 
-    // Format example: "Medkit  [38% HP] — Military-grade first aid kit"
     friend ostream& operator<<(ostream& os, const Item& i) {
         os << i.name
            << "  [" << i.healPercent << "% HP]  — "
